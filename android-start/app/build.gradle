@@ -15,6 +15,11 @@ android {
     }
     buildTypes {
         release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            // Set to true to enable proguard
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -26,6 +31,10 @@ android {
     }
 }
 
+ext {
+    gmscoreVersion = '12.0.1'
+}
+
 dependencies {
     testCompile 'junit:junit:4.12'
 
@@ -35,18 +44,18 @@ dependencies {
     compile 'com.android.support:appcompat-v7:27.0.2'
 
     // Google
-    compile 'com.google.android.gms:play-services-auth:11.8.0'
+    compile "com.google.android.gms:play-services-auth:${gmscoreVersion}"
 
     // Firebase
-    compile 'com.google.firebase:firebase-analytics:11.8.0'
-    compile 'com.google.firebase:firebase-database:11.8.0'
-    compile 'com.google.firebase:firebase-storage:11.8.0'
-    compile 'com.google.firebase:firebase-auth:11.8.0'
-    compile 'com.google.firebase:firebase-config:11.8.0'
-    compile 'com.google.android.gms:play-services-appinvite:11.8.0'
-    compile 'com.google.firebase:firebase-messaging:11.8.0'
-    compile 'com.google.android.gms:play-services-ads:11.8.0'
-    compile 'com.google.firebase:firebase-appindexing:11.8.0'
+    compile "com.google.firebase:firebase-analytics:${gmscoreVersion}"
+    compile "com.google.firebase:firebase-database:${gmscoreVersion}"
+    compile "com.google.firebase:firebase-storage:${gmscoreVersion}"
+    compile "com.google.firebase:firebase-auth:${gmscoreVersion}"
+    compile "com.google.firebase:firebase-config:${gmscoreVersion}"
+    compile "com.google.android.gms:play-services-appinvite:${gmscoreVersion}"
+    compile "com.google.firebase:firebase-messaging:${gmscoreVersion}"
+    compile "com.google.android.gms:play-services-ads:${gmscoreVersion}"
+    compile "com.google.firebase:firebase-appindexing:${gmscoreVersion}"
 
     // Firebase UI
     compile 'com.firebaseui:firebase-ui-database:3.1.0'

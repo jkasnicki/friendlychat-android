@@ -22,6 +22,7 @@ allprojects {
         jcenter()
         mavenLocal()
         maven { url 'https://maven.google.com'  }
+        // Can setup a custom repo here.
     }
 }
 
