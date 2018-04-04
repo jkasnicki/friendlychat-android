@@ -15,6 +15,9 @@
  */
 package com.google.firebase.codelab.friendlychat;
 
+import android.support.annotation.Keep;
+
+@Keep
 public class FriendlyMessage {
 
     private String id;

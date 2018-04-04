@@ -48,15 +48,20 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.firebase.ui.database.SnapshotParser;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.appinvite.AppInvite;
 import com.google.android.gms.appinvite.AppInviteInvitation;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.wallet.IsReadyToPayRequest;
+import com.google.android.gms.wallet.PaymentsClient;
+import com.google.android.gms.wallet.Wallet;
+import com.google.android.gms.wallet.WalletConstants;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -130,6 +135,8 @@ public class MainActivity extends AppCompatActivity
     private FirebaseAnalytics mFirebaseAnalytics;
     private AdView mAdView;
 
+    // Wallet
+    private PaymentsClient mPaymentsClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,6 +160,12 @@ public class MainActivity extends AppCompatActivity
                 mPhotoUrl = mFirebaseUser.getPhotoUrl().toString();
             }
         }
+        mPaymentsClient =
+                Wallet.getPaymentsClient(
+                        this,
+                        new Wallet.WalletOptions.Builder()
+                                .setEnvironment(WalletConstants.ENVIRONMENT_TEST)
+                                .build());
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
@@ -406,9 +419,37 @@ public class MainActivity extends AppCompatActivity
                 mUsername = ANONYMOUS;
                 startActivity(new Intent(this, SignInActivity.class));
                 return true;
+            case R.id.check_payments:
+                Log.i("Payments", "Check payments button button clicked");
+                checkPayments();
+                return true;
+            case R.id.oss_button:
+                Log.i("OSS", "OSS button button clicked");
+                startActivity(new Intent(this, OssLicensesMenuActivity.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void checkPayments() {
+        mPaymentsClient.isReadyToPay(
+                IsReadyToPayRequest.newBuilder()
+                        .addAllowedPaymentMethod(WalletConstants.PAYMENT_METHOD_CARD)
+                        .build()).addOnCompleteListener(new OnCompleteListener<Boolean>() {
+            @Override
+            public void onComplete(@NonNull Task<Boolean> task) {
+                try {
+                    boolean result = task.getResult(ApiException.class);
+                    Toast toast = Toast.makeText(
+                            getApplicationContext(),
+                            "Payments Available: " + result,
+                            Toast.LENGTH_LONG);
+                    toast.show();
+                } catch (ApiException exception) {
+                }
+            }
+        });
     }
 
     private void causeCrash() {

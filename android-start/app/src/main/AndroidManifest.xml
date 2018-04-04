@@ -26,9 +26,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".SignInActivity" />
+        <activity android:name="com.google.firebase.codelab.friendlychat.SignInActivity" />
         <service
-            android:name=".MyFirebaseMessagingService"
+            android:name="com.google.firebase.codelab.friendlychat.MyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -36,12 +36,17 @@
         </service>
 
         <service
-            android:name=".MyFirebaseInstanceIdService"
+            android:name="com.google.firebase.codelab.friendlychat.MyFirebaseInstanceIdService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
+
+        <!-- Enables the Google Pay API -->
+        <meta-data
+            android:name="com.google.android.gms.wallet.api.enabled"
+            android:value="true" />
 
     </application>
 

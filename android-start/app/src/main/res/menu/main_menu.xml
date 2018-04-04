@@ -16,4 +16,10 @@
     <item
         android:id="@+id/crash_menu"
         android:title="@string/cause_crash"/>
+    <item
+        android:id="@+id/check_payments"
+        android:title="@string/check_payments"/>
+    <item
+        android:id="@+id/oss_button"
+        android:title="Show OSS"/>
 </menu>

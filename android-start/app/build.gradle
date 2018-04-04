@@ -1,14 +1,15 @@
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
+apply plugin: 'com.google.gms.oss.licenses.plugin'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 26
     buildToolsVersion "26.0.3"
 
     defaultConfig {
         applicationId "com.google.firebase.codelab.friendlychat"
         minSdkVersion 19
-        targetSdkVersion 27
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -20,7 +21,7 @@ android {
         }
         debug {
             // Set to true to enable proguard
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -38,13 +39,17 @@ ext {
 dependencies {
     testCompile 'junit:junit:4.12'
 
-    compile 'com.android.support:design:27.0.2'
+    compile 'com.android.support:design:26.1.0'
     compile 'com.github.bumptech.glide:glide:4.3.1'
     compile 'de.hdodenhof:circleimageview:1.3.0'
-    compile 'com.android.support:appcompat-v7:27.0.2'
+    compile 'com.android.support:appcompat-v7:26.1.0'
 
     // Google
     compile "com.google.android.gms:play-services-auth:${gmscoreVersion}"
+
+    // Wallet
+    compile "com.android.support:support-v4:26.1.0"
+    compile "com.google.android.gms:play-services-wallet:${gmscoreVersion}"
 
     // Firebase
     compile "com.google.firebase:firebase-analytics:${gmscoreVersion}"
@@ -56,6 +61,7 @@ dependencies {
     compile "com.google.firebase:firebase-messaging:${gmscoreVersion}"
     compile "com.google.android.gms:play-services-ads:${gmscoreVersion}"
     compile "com.google.firebase:firebase-appindexing:${gmscoreVersion}"
+    compile "com.google.android.gms:play-services-oss-licenses:${gmscoreVersion}"
 
     // Firebase UI
     compile 'com.firebaseui:firebase-ui-database:3.1.0'
@@ -67,7 +73,7 @@ dependencies {
     androidTestCompile 'junit:junit:4.12'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:3.0.1'
     androidTestCompile 'com.android.support.test:runner:1.0.1'
-    androidTestCompile 'com.android.support:support-annotations:27.0.2'
+    androidTestCompile 'com.android.support:support-annotations:26.1.0'
 }
 
 apply plugin: 'com.google.gms.google-services'
